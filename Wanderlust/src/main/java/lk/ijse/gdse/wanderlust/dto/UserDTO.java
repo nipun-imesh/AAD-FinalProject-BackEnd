@@ -1,0 +1,20 @@
+package lk.ijse.gdse.wanderlust.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+public class UserDTO {
+
+    private String fustname;
+    private String lastname;
+    private String country;
+    private String email;
+    private String password;
+    private String role;
+}

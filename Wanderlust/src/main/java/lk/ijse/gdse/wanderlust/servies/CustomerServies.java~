@@ -1,0 +1,43 @@
+package lk.ijse.gdse.wanderlust.servies;
+
+
+import lk.ijse.gdse.wanderlust.dto.CustomerDto;
+import lk.ijse.gdse.wanderlust.entity.Customer;
+import lk.ijse.gdse.wanderlust.util.StatusList;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+public class CustomerServies {
+
+    @Autowired
+    private CustomerRepo customerRepo;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public int saveCustomer(CustomerDto customerDto) {
+        try {
+            if (customerRepo.existsByName(customerDto.getName())) {
+                System.out.println("dupiesssss");
+                return StatusList.Not_Acceptable;
+            } else {
+                customerRepo.save(modelMapper.map(customerDto, Customer.class));
+                return StatusList.OK;
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return StatusList.Internal_Server_Error;
+
+        }
+    }
+
+
+    public Object getCustomer() {
+       return customerRepo.findAll();
+    }
+}
