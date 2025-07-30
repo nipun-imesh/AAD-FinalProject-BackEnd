@@ -45,6 +45,7 @@ public class PasswordController {
     }
 
         public void sendEmail(String email, int code) {
+            System.out.println("nipun");
         new Thread(() -> {
             try {
                 String senderEmail = "dilshanbuddhi40@gmail.com";
