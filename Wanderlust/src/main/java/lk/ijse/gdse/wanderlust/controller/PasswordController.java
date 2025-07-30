@@ -16,6 +16,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Map;
 import java.util.Properties;
 
+
 @RestController
 @RequestMapping("/api/v1/password")
 @CrossOrigin
@@ -133,6 +134,4 @@ public class PasswordController {
                     .body(new ResponsDto(StatusList.Internal_Server_Error, e.getMessage(), null));
         }
     }
-
-
 }
