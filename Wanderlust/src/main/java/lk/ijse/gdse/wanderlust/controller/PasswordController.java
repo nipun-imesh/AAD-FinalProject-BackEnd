@@ -27,7 +27,7 @@ public class PasswordController {
 
     @PostMapping("/sentOTP")
     public String sentOTP(@RequestBody Map<String, String> requestBody) {
-        System.out.println("sentOTP");
+//        System.out.println("sentOTP");
         try {
             String email = requestBody.get("email");
             System.out.println(email + "  email");
