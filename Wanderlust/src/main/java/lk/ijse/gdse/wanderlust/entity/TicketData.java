@@ -12,6 +12,7 @@ import lombok.*;
 @Builder
 public class TicketData {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -47,5 +48,6 @@ public class TicketData {
     private String changePolicy;
     @Column(columnDefinition = "TEXT")
     private String cancellationPolicy;
+
 
 }
