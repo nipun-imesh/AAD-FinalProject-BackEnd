@@ -20,4 +20,8 @@ public interface UserService {
 
      UserDTO searchUser(String email);
      int resetPass(UserDTO exuser);
+
+    String getUserRoleByEmail(String email);
+
+    int loginUser(UserDTO userDTO);
 }

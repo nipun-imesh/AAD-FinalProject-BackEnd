@@ -2,7 +2,7 @@ package lk.ijse.gdse.wanderlust.controller;
 
 import lk.ijse.gdse.wanderlust.dto.CustomeTourDTO;
 import lk.ijse.gdse.wanderlust.dto.ResponsDto;
-import lk.ijse.gdse.wanderlust.servies.impl.CustomeTourServiesimpl;
+import lk.ijse.gdse.wanderlust.servies.CostomerTourServies;
 import lk.ijse.gdse.wanderlust.util.StatusList;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +16,11 @@ import java.util.List;
 @RequestMapping("api/v1/customerTour")
 public class CustomerTourController {
 
-    private final CustomeTourServiesimpl customeTourServies;
+    private final CostomerTourServies customeTourServies;
 
-    public CustomerTourController(CustomeTourServiesimpl customeTourServies) {
+    public CustomerTourController(CostomerTourServies customeTourServies) {
         this.customeTourServies = customeTourServies;
     }
-
 
     @PostMapping("/addTour")
     @PreAuthorize("hasAuthority('admin')")

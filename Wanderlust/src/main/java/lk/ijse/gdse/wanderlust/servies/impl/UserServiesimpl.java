@@ -78,4 +78,19 @@ public class UserServiesimpl implements UserService, UserDetailsService{
         userRepo.save(modelMapper.map(exuser,User.class));
         return StatusList.Created;
     }
+
+    @Override
+    public String getUserRoleByEmail(String email) {
+        User user = userRepo.findByEmail(email);
+        return user.getRole();
+    }
+
+    @Override
+    public int loginUser(UserDTO userDTO) {
+        if(userRepo.existsByEmail(userDTO.getEmail())) {
+            return StatusList.Created;
+        }else {
+            return StatusList.Not_Acceptable;
+        }
+    }
 }

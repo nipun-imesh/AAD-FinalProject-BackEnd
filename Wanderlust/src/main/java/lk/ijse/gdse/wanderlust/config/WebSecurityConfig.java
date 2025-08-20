@@ -59,7 +59,8 @@ public class WebSecurityConfig {
                                 "/swagger-ui.html",
                                 "/api/v1/customerTour",
                                 "/api/v1/ticketBooking/**",
-                                "/api/v1/AllgetTours/**").permitAll()
+                                "/api/v1/AllgetTours/**",
+                                "api/v1/offerAdd**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

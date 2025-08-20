@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,4 +44,24 @@ public class TicketDataController {
         }
     }
 
+    @GetMapping("/searchTicket")
+    public ResponseEntity<ResponsDto> searchTicket(@RequestBody TicketDataDTO ticketDataDTO) {
+        try {
+            List<TicketDataDTO> allTickets = ticketDataServices.searchTicket(ticketDataDTO);
+            if (allTickets != null && !allTickets.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body(new ResponsDto(StatusList.OK, "Tickets retrieved successfully", allTickets
+                        ));
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new ResponsDto(StatusList.Not_Found, "No tickets found", null
+                        ));
+            }
+        }catch ( Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponsDto(StatusList.Internal_Server_Error, "fail to search", null
+                    ));
+        }
+    }
 }

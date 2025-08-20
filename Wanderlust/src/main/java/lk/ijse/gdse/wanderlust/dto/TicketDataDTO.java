@@ -14,6 +14,7 @@ public class TicketDataDTO {
     // Flight details
     private String airlineName;
     private String flightNumber;
+    private String country;
     private String departureAirport;
     private String arrivalAirport;
     private String departureTerminal;

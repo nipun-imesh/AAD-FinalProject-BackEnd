@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface TicketDataServices {
     List<TicketDataDTO> getAllTicketData();
+
+    List<TicketDataDTO> searchTicket(TicketDataDTO ticketDataDTO);
 }

@@ -12,4 +12,10 @@ import lombok.Setter;
 public class AuthaDTO {
     private String token;
     private String email;
+    private String role;
+
+    public AuthaDTO(String token, String email) {
+        this.token = token;
+        this.email = email;
+    }
 }

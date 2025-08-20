@@ -1,7 +1,6 @@
 package lk.ijse.gdse.wanderlust.controller;
 
 
-
 import lk.ijse.gdse.wanderlust.dto.AuthaDTO;
 import lk.ijse.gdse.wanderlust.dto.ResponsDto;
 import lk.ijse.gdse.wanderlust.dto.UserDTO;
@@ -28,7 +27,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<ResponsDto> register(@RequestBody UserDTO userDTO){
-        System.out.println("jkkjjjjj");
+
         try {
             int res = userServies.saveUser(userDTO);
             String token = jwtUtil.generateToken(userDTO);
@@ -47,13 +46,40 @@ public class UserController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponsDto(StatusList.Internal_Server_Error,e.getMessage(),null));
         }
     }
 
-    @GetMapping("/get")
-    public String get(){
-        return "hello";
+
+    @PostMapping("/login")
+    public ResponseEntity<ResponsDto> login(@RequestBody UserDTO userDTO) {
+        try {
+            int res = userServies.loginUser(userDTO);
+            String role = userServies.getUserRoleByEmail(userDTO.getEmail());
+            String token = jwtUtil.generateToken(userDTO);
+
+            AuthaDTO authaDTO = new AuthaDTO(token, userDTO.getEmail(), role);
+
+            switch (res) {
+                case StatusList.Created:
+                    return ResponseEntity.status(HttpStatus.CREATED)
+                            .body(new ResponsDto(StatusList.Created, "success", authaDTO));
+                case StatusList.Not_Acceptable:
+                    return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+                            .body(new ResponsDto(StatusList.Not_Acceptable, "fail", null));
+                case StatusList.Unauthorized:
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                            .body(new ResponsDto(StatusList.Unauthorized, "fail", null));
+                default:
+                    return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                            .body(new ResponsDto(StatusList.Bad_Gateway, "fail", null));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponsDto(StatusList.Internal_Server_Error, e.getMessage(), null));
+        }
     }
 }

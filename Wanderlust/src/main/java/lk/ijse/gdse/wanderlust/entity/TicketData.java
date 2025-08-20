@@ -20,6 +20,7 @@ public class TicketData {
     // Flight details
     private String airlineName;
     private String flightNumber;
+    private String country;
     private String departureAirport;
     private String arrivalAirport;
     private String departureTerminal;
@@ -48,6 +49,4 @@ public class TicketData {
     private String changePolicy;
     @Column(columnDefinition = "TEXT")
     private String cancellationPolicy;
-
-
 }
