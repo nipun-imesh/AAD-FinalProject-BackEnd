@@ -3,6 +3,8 @@ package lk.ijse.gdse.wanderlust.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "ticket_preview")
 @Setter
@@ -49,4 +51,8 @@ public class TicketData {
     private String changePolicy;
     @Column(columnDefinition = "TEXT")
     private String cancellationPolicy;
+
+
+    @OneToMany(mappedBy = "ticketData")
+    private List<TicketBooking> bookings;
 }

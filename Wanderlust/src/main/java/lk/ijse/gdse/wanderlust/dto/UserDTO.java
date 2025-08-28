@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 public class UserDTO {
 
-    private String fustname;
+    private String firstname;
     private String lastname;
     private String country;
     private String email;

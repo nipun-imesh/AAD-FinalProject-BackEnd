@@ -1,7 +1,7 @@
 package lk.ijse.gdse.wanderlust.servies.impl;
 
-import lk.ijse.gdse.wanderlust.dto.CustomeTourDTO;
-import lk.ijse.gdse.wanderlust.entity.CustomeTour;
+import lk.ijse.gdse.wanderlust.dto.CustomTourDTO;
+import lk.ijse.gdse.wanderlust.entity.CustomTour;
 import lk.ijse.gdse.wanderlust.repo.CustomeTourRepository;
 import lk.ijse.gdse.wanderlust.servies.CostomerTourServies;
 import lk.ijse.gdse.wanderlust.util.StatusList;
@@ -21,9 +21,9 @@ public class CustomeTourServiesimpl implements CostomerTourServies {
     @Autowired
     private ModelMapper modelMapper;
 
-    public int saveTour(CustomeTourDTO customeTourDTO) {
+    public int saveTour(CustomTourDTO customeTourDTO) {
         try {
-            customeTourRepository.save(modelMapper.map(customeTourDTO, CustomeTour.class));
+            customeTourRepository.save(modelMapper.map(customeTourDTO, CustomTour.class));
             return StatusList.Created;
         } catch (Exception e) {
             e.printStackTrace();
@@ -32,10 +32,10 @@ public class CustomeTourServiesimpl implements CostomerTourServies {
     }
 
     @Override
-    public int updateTour(CustomeTourDTO customeTourDTO) {
+    public int updateTour(CustomTourDTO customeTourDTO) {
         try {
             if( customeTourRepository.existsById(String.valueOf(customeTourDTO.getId()))){
-                customeTourRepository.save(modelMapper.map(customeTourDTO, CustomeTour.class));
+                customeTourRepository.save(modelMapper.map(customeTourDTO, CustomTour.class));
                 return StatusList.Created;
             }else {
                 return StatusList.Not_Found;
@@ -46,15 +46,15 @@ public class CustomeTourServiesimpl implements CostomerTourServies {
     }
 
     @Override
-    public List<CustomeTourDTO> getAllTours() {
-        List<CustomeTour> all = customeTourRepository.findAll();
-        return modelMapper.map(all,new TypeToken<List<CustomeTourDTO>>(){}.getType());
+    public List<CustomTourDTO> getAllTours() {
+        List<CustomTour> all = customeTourRepository.findAll();
+        return modelMapper.map(all,new TypeToken<List<CustomTourDTO>>(){}.getType());
     }
 
     @Override
-    public List<CustomeTourDTO> searchTours(String keyword) {
-        List<CustomeTour> tours = customeTourRepository.searchByKeyword(keyword);
-        return modelMapper.map(tours,new TypeToken<List<CustomeTourDTO>>(){}.getType());
+    public List<CustomTourDTO> searchTours(String keyword) {
+        List<CustomTour> tours = customeTourRepository.searchByKeyword(keyword);
+        return modelMapper.map(tours,new TypeToken<List<CustomTourDTO>>(){}.getType());
     }
 
     @Override

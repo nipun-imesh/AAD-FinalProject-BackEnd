@@ -1,10 +1,6 @@
 package lk.ijse.gdse.wanderlust.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,4 +37,8 @@ public class TicketBooking {
     private double price;         // Ticket price
     private String paymentStatus; // Paid, Pending, etc.
     private String bookingDate;   // Booking date
+
+    @ManyToOne
+    @JoinColumn(name = "ticket_data_id")
+    private TicketData ticketData;
 }

@@ -1,6 +1,6 @@
 package lk.ijse.gdse.wanderlust.controller;
 
-import lk.ijse.gdse.wanderlust.dto.CustomeTourDTO;
+import lk.ijse.gdse.wanderlust.dto.CustomTourDTO;
 import lk.ijse.gdse.wanderlust.dto.ResponsDto;
 import lk.ijse.gdse.wanderlust.servies.CostomerTourServies;
 import lk.ijse.gdse.wanderlust.util.StatusList;
@@ -14,17 +14,17 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("api/v1/customerTour")
-public class CustomerTourController {
+public class CustomTourController {
 
     private final CostomerTourServies customeTourServies;
 
-    public CustomerTourController(CostomerTourServies customeTourServies) {
+    public CustomTourController(CostomerTourServies customeTourServies) {
         this.customeTourServies = customeTourServies;
     }
 
     @PostMapping("/addTour")
     @PreAuthorize("hasAuthority('admin')")
-    public ResponseEntity<ResponsDto> addTour(@RequestBody CustomeTourDTO customeTourDTO) {
+    public ResponseEntity<ResponsDto> addTour(@RequestBody CustomTourDTO customeTourDTO) {
         try {
             int res = customeTourServies.saveTour(customeTourDTO);
 
@@ -47,7 +47,7 @@ public class CustomerTourController {
     }
 
     @PatchMapping("/updateTour")
-    public ResponseEntity<ResponsDto> updateTour(@RequestBody CustomeTourDTO customeTourDTO) {
+    public ResponseEntity<ResponsDto> updateTour(@RequestBody CustomTourDTO customeTourDTO) {
         try {
             int res = customeTourServies.updateTour(customeTourDTO);
 
@@ -84,7 +84,7 @@ public class CustomerTourController {
     @GetMapping("/search/{keyword}")
     public ResponseEntity<ResponsDto> searchTours(@PathVariable String keyword) {
         try {
-            List<CustomeTourDTO> results = customeTourServies.searchTours(keyword);
+            List<CustomTourDTO> results = customeTourServies.searchTours(keyword);
 
             if (results.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)

@@ -15,6 +15,8 @@ public class TourDestinationDTO {
     private String country;
     private String city;
     private String description;
-    private String image;
+    private String destinationimage;
     private String status;
+    private double longitude;
+    private double latitude;
 }

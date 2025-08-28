@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -87,10 +88,21 @@ public class UserServiesimpl implements UserService, UserDetailsService{
 
     @Override
     public int loginUser(UserDTO userDTO) {
-        if(userRepo.existsByEmail(userDTO.getEmail())) {
-            return StatusList.Created;
-        }else {
-            return StatusList.Not_Acceptable;
+        Optional<User> user = Optional.ofNullable(userRepo.findByEmail(userDTO.getEmail()));
+
+        if (user.isPresent()) {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            System.out.println("Plain: " + userDTO.getPassword());
+            System.out.println("Hashed in DB: " + user.get().getPassword());
+
+            if (encoder.matches(userDTO.getPassword(), user.get().getPassword())) {
+                System.out.println("Password matched!");
+                return StatusList.Created; // login success
+            } else {
+                System.out.println("Password mismatch!");
+                return StatusList.Unauthorized; // wrong password
+            }
         }
+        return StatusList.Not_Acceptable; // email not found
     }
 }

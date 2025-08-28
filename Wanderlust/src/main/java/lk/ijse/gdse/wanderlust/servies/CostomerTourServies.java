@@ -1,17 +1,17 @@
 package lk.ijse.gdse.wanderlust.servies;
 
-import lk.ijse.gdse.wanderlust.dto.CustomeTourDTO;
+import lk.ijse.gdse.wanderlust.dto.CustomTourDTO;
 
 import java.util.List;
 
 public interface CostomerTourServies {
-    int saveTour(CustomeTourDTO customeTourDTO);
+    int saveTour(CustomTourDTO customeTourDTO);
 
-    int updateTour(CustomeTourDTO customeTourDTO);
+    int updateTour(CustomTourDTO customeTourDTO);
 
-    List<CustomeTourDTO> getAllTours();
+    List<CustomTourDTO> getAllTours();
 
-    List<CustomeTourDTO> searchTours(String keyword);
+    List<CustomTourDTO> searchTours(String keyword);
 
     Object deleteTour(String id);
 }

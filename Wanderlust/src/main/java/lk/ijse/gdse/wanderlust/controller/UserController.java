@@ -56,30 +56,28 @@ public class UserController {
     public ResponseEntity<ResponsDto> login(@RequestBody UserDTO userDTO) {
         try {
             int res = userServies.loginUser(userDTO);
-            String role = userServies.getUserRoleByEmail(userDTO.getEmail());
-            String token = jwtUtil.generateToken(userDTO);
 
-            AuthaDTO authaDTO = new AuthaDTO(token, userDTO.getEmail(), role);
+            if (res == StatusList.Created) {
+                String role = userServies.getUserRoleByEmail(userDTO.getEmail());
+                String token = jwtUtil.generateToken(userDTO);
 
-            switch (res) {
-                case StatusList.Created:
-                    return ResponseEntity.status(HttpStatus.CREATED)
-                            .body(new ResponsDto(StatusList.Created, "success", authaDTO));
-                case StatusList.Not_Acceptable:
-                    return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                            .body(new ResponsDto(StatusList.Not_Acceptable, "fail", null));
-                case StatusList.Unauthorized:
-                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                            .body(new ResponsDto(StatusList.Unauthorized, "fail", null));
-                default:
-                    return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
-                            .body(new ResponsDto(StatusList.Bad_Gateway, "fail", null));
+                AuthaDTO authaDTO = new AuthaDTO(token, userDTO.getEmail(), role);
+                return ResponseEntity.status(HttpStatus.CREATED)
+                        .body(new ResponsDto(StatusList.Created, "Login success", authaDTO));
             }
-
+            else if (res == StatusList.Unauthorized) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new ResponsDto(StatusList.Unauthorized, "Invalid password", null));
+            }
+            else {
+                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+                        .body(new ResponsDto(StatusList.Not_Acceptable, "Email not found", null));
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponsDto(StatusList.Internal_Server_Error, e.getMessage(), null));
         }
     }
+
 }
