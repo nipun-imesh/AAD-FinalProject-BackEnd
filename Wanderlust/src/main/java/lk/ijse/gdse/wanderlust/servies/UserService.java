@@ -24,4 +24,8 @@ public interface UserService {
     String getUserRoleByEmail(String email);
 
     int loginUser(UserDTO userDTO);
+
+    UserDTO getUser(String email);
+
+    Object getAllUser();
 }

@@ -27,12 +27,5 @@ public class User {
 
     private String role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<TicketBooking> bookings;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<CustomTour> customTours;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Payment> payments;
 }

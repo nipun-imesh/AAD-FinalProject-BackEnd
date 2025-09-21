@@ -75,10 +75,24 @@ public class UserServiesimpl implements UserService, UserDetailsService{
     @Override
     public int resetPass(UserDTO exuser) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        exuser.setPassword(encoder.encode(exuser.getPassword()));
-        userRepo.save(modelMapper.map(exuser,User.class));
+
+        // get existing user from DB
+        User user = userRepo.findByEmail(exuser.getEmail());
+        if (user == null) {
+            return StatusList.Not_Found;
+        }
+
+        // only update password
+        user.setPassword(encoder.encode(exuser.getPassword()));
+
+        // update existing user
+        userRepo.saveAndFlush(user); // <-- ensure update, not insert
+
         return StatusList.Created;
     }
+
+
+
 
     @Override
     public String getUserRoleByEmail(String email) {
@@ -104,5 +118,20 @@ public class UserServiesimpl implements UserService, UserDetailsService{
             }
         }
         return StatusList.Not_Acceptable; // email not found
+    }
+
+    @Override
+    public UserDTO getUser(String email) {
+        User user = userRepo.findByEmail(email);
+        if (user == null) {
+            return null;
+        }else {
+            return modelMapper.map(user, UserDTO.class);
+        }
+    }
+
+    @Override
+    public Object getAllUser() {
+        return userRepo.findAll();
     }
 }

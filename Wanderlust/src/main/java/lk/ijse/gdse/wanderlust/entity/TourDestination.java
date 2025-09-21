@@ -1,9 +1,6 @@
 package lk.ijse.gdse.wanderlust.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +15,14 @@ public class TourDestination {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String country;
     private String city;
+
+    @Column(length = 1000)
     private String description;
-    private String image;
+    private String destinationimage;
     private String status;
+    private double longitude;
+    private double latitude;
 }

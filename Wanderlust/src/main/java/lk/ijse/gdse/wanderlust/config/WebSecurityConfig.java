@@ -32,6 +32,7 @@ public class WebSecurityConfig {
     private UserServiesimpl userService;
     @Autowired
     private JwtFilter jwtFilter;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -55,13 +56,17 @@ public class WebSecurityConfig {
                                 "/api/v1/user/register",
                                 "/api/v1/auth/refreshToken",
                                 "/api/v1/user/login",
+                                "/api/v1/user/getUser/**",
                                 "/v3/api-docs/",
                                 "/swagger-ui/",
                                 "/swagger-ui.html",
-                                "/api/v1/customerTour",
+                                "/api/v1/customerTour/**",
                                 "/api/v1/ticketBooking/**",
                                 "/api/v1/AllgetTours/**",
-                                "api/v1/offerAdd**").permitAll()
+                                "api/v1/offerAdd**",
+                                "/api/v1/tourDestination/**",
+                                "/api/v1/password/**",
+                                "/api/v1/ticketData/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

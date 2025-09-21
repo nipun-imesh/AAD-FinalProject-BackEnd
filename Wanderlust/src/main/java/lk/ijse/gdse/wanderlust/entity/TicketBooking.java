@@ -15,11 +15,11 @@ public class TicketBooking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String useremail;
-    private String username;
-    private String useraddress;
+    private String userfirstname;
+    private String userlastname;
     private String userphone;
 
     @Column(name = "from_location")
@@ -33,12 +33,16 @@ public class TicketBooking {
     private String flightNumber;  // Flight no.
     private String seatNumber;    // Seat no.
     private String classType;     // Economy, Business, etc.
-    private int passengerCount;   // Number of passengers
     private double price;         // Ticket price
-    private String paymentStatus; // Paid, Pending, etc.
     private String bookingDate;   // Booking date
+    private String passportNumber;
+    private int passportExpiryDate;
 
     @ManyToOne
     @JoinColumn(name = "ticket_data_id")
     private TicketData ticketData;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

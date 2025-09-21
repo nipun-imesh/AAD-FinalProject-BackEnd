@@ -13,18 +13,18 @@ public interface TicketDataRepository extends JpaRepository<TicketData,Long> {
     @Query(value = """
     SELECT * 
     FROM ticket_preview 
-    WHERE (:departureAirport IS NULL OR departure_airport LIKE %:departureAirport%)
-      AND (:arrivalAirport IS NULL OR arrival_airport LIKE %:arrivalAirport%) 
-      AND (:arrivalDate IS NULL OR arrival_date = :arrivalDate)
+    WHERE (:departureAirport IS NULL OR departure_airport = :departureAirport)
+      AND (:arrivalAirport IS NULL OR arrival_airport = :arrivalAirport)
       AND (:departureDate IS NULL OR departure_date = :departureDate)
-      AND (:ticketType IS NULL OR ticket_type LIKE %:ticketType%)
-    """, nativeQuery = true)
-
+      AND (:arrivalDate IS NULL OR arrival_date = :arrivalDate)
+      AND (:travelClass IS NULL OR travel_class = :travelClass)
+""", nativeQuery = true)
     List<TicketData> searchAllTickets(
             String departureAirport,
             String arrivalAirport,
-            String arrivalDate,
             String departureDate,
-            String ticketType
+            String arrivalDate,
+            String travelClass
     );
+
 }

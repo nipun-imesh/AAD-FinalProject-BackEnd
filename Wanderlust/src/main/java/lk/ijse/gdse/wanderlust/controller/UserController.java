@@ -11,9 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
 @RestController
 @RequestMapping("api/v1/user")
+@CrossOrigin(origins = "http://127.0.0.1:5501") // allow your frontend
+
 public class UserController {
 
     private final UserServiesimpl userServies;
@@ -77,6 +78,62 @@ public class UserController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponsDto(StatusList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
+
+    @GetMapping("/getUser/{email}")
+    public ResponseEntity<ResponsDto> getUser(@PathVariable String email) {
+        try {
+            UserDTO userDTO = userServies.getUser(email);
+
+            if (userDTO != null) {
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body(new ResponsDto(
+                                StatusList.Created,
+                                "User found",
+                                userDTO
+                        ));
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new ResponsDto(
+                                StatusList.Not_Found,
+                                "User not found",
+                                null
+                        ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponsDto(
+                            StatusList.Internal_Server_Error,
+                            e.getMessage(),
+                            null
+                    ));
+        }
+    }
+
+    @GetMapping("/AllgetUser")
+    public ResponseEntity<ResponsDto> getAllUser() {
+        try {
+            // Get all users from service
+            var allUsers = userServies.getAllUser();
+
+            // Return response
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(new ResponsDto(
+                            StatusList.Created,
+                            "Success",
+                            allUsers
+                    ));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponsDto(
+                            StatusList.Internal_Server_Error,
+                            e.getMessage(),
+                            null
+                    ));
         }
     }
 

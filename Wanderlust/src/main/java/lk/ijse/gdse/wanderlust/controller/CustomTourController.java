@@ -23,7 +23,7 @@ public class CustomTourController {
     }
 
     @PostMapping("/addTour")
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<ResponsDto> addTour(@RequestBody CustomTourDTO customeTourDTO) {
         try {
             int res = customeTourServies.saveTour(customeTourDTO);

@@ -16,7 +16,7 @@ public class CustomTourDTO {
     private String city;
     private String date;
     private String duration;
-    private int price;
+    private Integer price;
     private String description;
     private String image;
     private String status;

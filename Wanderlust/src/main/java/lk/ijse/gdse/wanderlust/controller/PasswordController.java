@@ -51,7 +51,7 @@ public class PasswordController {
                 String senderEmail = "imeshnipun@gmail.com";
                 String senderPassword = "upgb vmib oacs gmka"; // Replace with the app-specific password from Gmail
 
-                String subject = "OTP Code from SmallWorld";
+                String subject = "OTP Code from Wonderlust";
 
                 String body = "Dear User,\n\n" +
                         "Your OTP code for accessing Wanderlust services is: " + code + "\n\n" +
@@ -95,17 +95,32 @@ public class PasswordController {
         }).start();
         }
 
-        @PutMapping("/updatePassword")
-        public String updatePassword(@RequestBody UserDTO userDTO){
-            try {
-                UserDTO exuser = userService.searchUser(userDTO.getEmail());
-                exuser.setPassword(userDTO.getPassword());
-                System.out.println("updatePassword");
-                return "Password updated for "+exuser; // meka gahanna oneee
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+    @PutMapping("/updatePassword")
+    public ResponseEntity<ResponsDto> updatePassword(@RequestBody UserDTO userDTO) {
+        try {
+            UserDTO exuser = userService.searchUser(userDTO.getEmail());
+            if (exuser == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new ResponsDto(StatusList.Not_Found, "User not found", null));
             }
+
+            // set new password and update using resetPass()
+            exuser.setPassword(userDTO.getPassword());
+            int res = userService.resetPass(exuser);
+
+            if (res == StatusList.Created) {
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body(new ResponsDto(StatusList.OK, "✅ Password updated successfully!", null));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                        .body(new ResponsDto(StatusList.Bad_Gateway, "❌ Error updating password", null));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponsDto(StatusList.Internal_Server_Error, e.getMessage(), null));
         }
+    }
+
 
     @PostMapping("/resetPassword")
     public ResponseEntity<ResponsDto> resetPassword(@RequestBody UserDTO userDTO) {

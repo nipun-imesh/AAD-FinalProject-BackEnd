@@ -18,6 +18,7 @@ public class CustomTour {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String country;
     private String city;
     private String date;
@@ -27,6 +28,5 @@ public class CustomTour {
     private String image;
     private String status;
 
-    @OneToMany(mappedBy = "customTour")
-    private List<TicketBooking> bookings;
+
 }

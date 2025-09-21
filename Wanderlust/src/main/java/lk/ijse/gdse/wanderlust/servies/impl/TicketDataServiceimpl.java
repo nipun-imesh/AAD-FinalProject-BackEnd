@@ -25,16 +25,21 @@ public class TicketDataServiceimpl implements TicketDataServices {
         List<TicketData> all = ticketDataRepository.findAll();
         return modelMapper.map(all,new TypeToken<List<TicketDataDTO>>(){}.getType());
     }
-
+    @Override
     public List<TicketDataDTO> searchTicket(TicketDataDTO ticketDataDTO) {
         List<TicketData> all = ticketDataRepository.searchAllTickets(
                 ticketDataDTO.getDepartureAirport(),
                 ticketDataDTO.getArrivalAirport(),
-                ticketDataDTO.getArrivalDate(),
                 ticketDataDTO.getDepartureDate(),
-                ticketDataDTO.getTicketType()
+                (ticketDataDTO.getArrivalDate() == null || ticketDataDTO.getArrivalDate().isEmpty())
+                        ? null
+                        : ticketDataDTO.getArrivalDate(),
+                ticketDataDTO.getTravelClass()
         );
 
         return modelMapper.map(all, new TypeToken<List<TicketDataDTO>>() {}.getType());
     }
+
+
+
 }
